@@ -1,5 +1,5 @@
-Packages need including pytorch-geometric, pytorch, pybind11
-The code are tested on cuda113 and cuda116 environment
+Packages need including pytorch-geometric, pytorch, pybind11.
+The code are tested under cuda113 and cuda116 environment.
 
 
 Step 1: Compile C++ sampler
