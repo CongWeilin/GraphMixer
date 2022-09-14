@@ -14,11 +14,13 @@ python gen_graph.py --data REDDIT --add_reverse
 
 Step 3: Run experiment
 ```
-python train.py --data GDELT_lite --num_neighbors 30   | tee gdelt_lite.txt
-python train.py --data REDDIT     --num_neighbors 10   | tee reddit.txt
-python train.py --data WIKI       --num_neighbors 30   | tee wiki.txt
-python train.py --data MOOC       --num_neighbors 20   | tee mooc.txt
-python train.py --data LASTFM     --num_neighbors 10   | tee lastfm.txt
+python train.py --data REDDIT     --num_neighbors 10 --use_cached_subgraph --use_onehot_node_feats
+python train.py --data WIKI       --num_neighbors 30 --use_cached_subgraph --use_onehot_node_feats
+python train.py --data MOOC       --num_neighbors 20 --use_cached_subgraph --use_onehot_node_feats
+python train.py --data LASTFM     --num_neighbors 10 --use_cached_subgraph --use_onehot_node_feats
+python train.py --data GDELT_lite --num_neighbors 30 --use_cached_subgraph --use_onehot_node_feats --ignore_edge_feats # GDELT_ne 
+python train.py --data GDELT_lite --num_neighbors 30 --use_cached_subgraph --ignore_edge_feats                         # GDELT_e
+python train.py --data GDELT_lite --num_neighbors 30 --use_cached_subgraph                                             # GDELT
 ```
 
 Model arch with hyper-parameters including `time_dims, hidden_dims, node_feat_dims, edge_feat_dims`.

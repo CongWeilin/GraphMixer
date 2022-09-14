@@ -193,7 +193,6 @@ if __name__ == "__main__":
 
     args.regen_models = True
     args.use_graph_structure = True
-    args.use_onehot_node_feats = True
 
     print(args)
     
