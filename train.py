@@ -8,9 +8,10 @@ import numpy as np
 import argparse
 import os
 
-from utils import set_seed, load_feat, load_graph, hits_at_K
+from utils import set_seed, load_feat, load_graph
 
-from link_pred_train_utils import link_pred_train, fetch_all_predict
+from link_pred_train_utils import link_pred_train
+from link_pred_eval_utils import link_pred_eval
 from data_process_utils import check_data_leakage
 
 ####################################################################
@@ -225,25 +226,5 @@ if __name__ == "__main__":
         model = model.to(args.device)
           
     ###################################################
-    # node classification
-    
-    if args.data in ['REDDIT', 'WIKI'] and args.use_node_cls:
-        
-        from utils import node_cls_info, get_node_embeds
-        from node_train_utils import node_classification
-
-        args.node_embeds_fn = fn+'_node_embeds.pt'
-        args.posneg = True # make the class balanced, refer to https://github.com/amazon-research/tgl/blob/main/train_node.py
-        
-        ldf, node_role, node_labels = node_cls_info(args)
-
-        if os.path.exists(args.node_embeds_fn) and args.regen_models==False:
-            print('Load from ', args.node_embeds_fn)
-            node_embeds = torch.load(args.node_embeds_fn)
-        else:
-            print('Compute node embeddings ...')
-            node_embeds = get_node_embeds(model.base_model, edge_feats, g, ldf, args)
-            torch.save(node_embeds, args.node_embeds_fn)
-            print('Save to ', args.node_embeds_fn)
-
-        node_classification(args, node_embeds, node_role, node_labels)
+    # Recall@K + MRR
+    link_pred_eval(model.to(args.device), args, g, df, node_feats, edge_feats)
