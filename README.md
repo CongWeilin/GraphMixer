@@ -1,5 +1,5 @@
-Packages need including `pytorch-geometric`, `pytorch`, `pybind11`.
-The code are tested under `cuda113` and `cuda116` environment. Please consider download `pytorch-geometric` and `pytorch` with the following commands:
+Packages that are needed including `pytorch-geometric`, `pytorch`, and `pybind11`.
+The code are tested under `cuda113` and `cuda116` environment. Please consider download these packages with the following commands:
 
 ```
 # pytorch
@@ -7,6 +7,9 @@ pip3 install torch torchvision torchaudio --extra-index-url https://download.pyt
 
 # pytorch-geometric
 pip install torch-scatter torch-sparse torch-cluster torch-spline-conv torch-geometric -f https://data.pyg.org/whl/torch-1.12.0+cu116.html
+
+# pybind11 (used for c++ sampler)
+pip install pybind11
 ```
 
 
