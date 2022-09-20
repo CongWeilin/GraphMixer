@@ -11,8 +11,9 @@ Step 2: Download data by using `DATA/down.sh`. To create the sub-sampled version
 
 Step 3: Preprocess data (from https://github.com/amazon-research/tgl)
 ```
-python gen_graph.py --data REDDIT # replace REDDIT to other datasets, e.g., WIKI, MOOC, LASTFM, and GDELT_lite
+python gen_graph.py --data REDDIT
 ```
+Please replace REDDIT to other datasets, e.g., WIKI, MOOC, LASTFM, and GDELT_lite.
 
 Step 3: Run experiment
 ```
