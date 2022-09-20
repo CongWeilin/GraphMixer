@@ -1,7 +1,7 @@
 Packages need including pytorch-geometric, pytorch, pybind11.
 The code are tested under cuda113 and cuda116 environment.
 
-# How to reproduce experiment results?
+# Run the code
 
 Step 1: Compile C++ sampler
 ```
@@ -29,7 +29,7 @@ python train.py --data GDELT_lite --num_neighbors 30 --use_cached_subgraph      
 
 If you are running this dataset for the first, it need to take sometime pre-processing the input data. But it will only do it once.
 
-# An overview on our neural architecture
+# Neural architecture
 
 Model arch with hyper-parameters including `time_dims, hidden_dims, node_feat_dims, edge_feat_dims`, where `time_dims = hidden_dims = 100` are the same for all baselines.
 ```
@@ -67,6 +67,6 @@ Mixer_per_node(
 )
 ```
 
-# Prevent information leakage
+# Comments
 
 To double check and make sure no information leakage, we implement a function `check_data_leakage(args, g, df)` in `data_process_utils.py` to go through all the training data we used for GraphMixer. To enable this, please add `--check_data_leakage` to the command line.  
