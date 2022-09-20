@@ -7,9 +7,11 @@ Step 1: Compile C++ sampler
 python setup.py build_ext --inplace
 ```
 
-Step 2: Preprocess data (from https://github.com/amazon-research/tgl)
+Step 2: Download data by using `DATA/down.sh`. To create the sub-sampled version of GDELT dataset, please use `DATA/GDELT_lite/gen_dataset.py`.
+
+Step 3: Preprocess data (from https://github.com/amazon-research/tgl)
 ```
-python gen_graph.py --data REDDIT --add_reverse
+python gen_graph.py --data REDDIT # replace REDDIT to other datasets, e.g., WIKI, MOOC, LASTFM, and GDELT_lite
 ```
 
 Step 3: Run experiment
