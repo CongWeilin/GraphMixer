@@ -23,7 +23,7 @@ python train.py --data GDELT_lite --num_neighbors 30 --use_cached_subgraph --ign
 python train.py --data GDELT_lite --num_neighbors 30 --use_cached_subgraph                                             # GDELT
 ```
 
-Model arch with hyper-parameters including `time_dims, hidden_dims, node_feat_dims, edge_feat_dims`.
+Model arch with hyper-parameters including `time_dims, hidden_dims, node_feat_dims, edge_feat_dims`, where `time_dims = hidden_dims = 100` are the same for all baselines.
 ```
 Mixer_per_node(
   (base_model): MLPMixer(
@@ -58,3 +58,5 @@ Mixer_per_node(
   (creterion): BCEWithLogitsLoss()
 )
 ```
+
+To double check and make sure no information leakage, we implement a function `check_data_leakage(args, g, df)` in `data_process_utils.py` to go through all the training data we used for GraphMixer. To enable this, please add `--check_data_leakage` to the command line.  
