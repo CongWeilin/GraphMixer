@@ -1,6 +1,7 @@
 from tqdm import tqdm
 import torch
 
+import time
 import copy
 import json
 
@@ -8,14 +9,14 @@ import numpy as np
 from torch_sparse import SparseTensor
 from torch_geometric.utils import coalesce, add_self_loops
 
-
 from data_process_utils import pre_compute_subgraphs, get_random_inds, get_subgraph_sampler
 from construct_subgraph import construct_mini_batch_giant_graph, print_subgraph_data
 
 from utils import row_norm, sym_norm
 
 def run(model, optimizer, args, subgraphs, df, node_feats, edge_feats, mode):
-
+    time_aggre = 0
+    
     ###################################################
     # setup modes
     if mode == 'train':
@@ -96,7 +97,9 @@ def run(model, optimizer, args, subgraphs, df, node_feats, edge_feats, mode):
         
         # forward + backward
         has_temporal_neighbors = [True for _ in range(len(has_temporal_neighbors))] # ignore all mask ???
+        start_time = time.time()
         loss, ap, auc = model(inputs, has_temporal_neighbors, neg_samples, subgraph_node_feats)
+        time_aggre += (time.time() - start_time)
         all_ap.append(ap)
         all_auc.append(auc)
 
@@ -112,7 +115,7 @@ def run(model, optimizer, args, subgraphs, df, node_feats, edge_feats, mode):
     pbar.close()    
     
     ap, auc = sum(all_ap)/len(all_ap), sum(all_auc)/len(all_auc)
-    print('%s mode, average precision %.4f, auc score %.4f, loss %.4f'%(mode, ap, auc, loss.item()))
+    print('%s mode with time %.4f, average precision %.4f, auc score %.4f, loss %.4f'%(mode, time_aggre, ap, auc, loss.item()))
     return ap, auc, loss.item()
 
 def link_pred_train(model, args, g, df, node_feats, edge_feats):
