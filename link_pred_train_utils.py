@@ -96,17 +96,19 @@ def run(model, optimizer, args, subgraphs, df, node_feats, edge_feats, mode):
         ]
         
         # forward + backward
-        has_temporal_neighbors = [True for _ in range(len(has_temporal_neighbors))] # ignore all mask ???
+        has_temporal_neighbors = [True for _ in range(len(has_temporal_neighbors))] # not using it
+        
         start_time = time.time()
         loss, ap, auc = model(inputs, has_temporal_neighbors, neg_samples, subgraph_node_feats)
-        time_aggre += (time.time() - start_time)
-        all_ap.append(ap)
-        all_auc.append(auc)
-
         if mode == 'train' and optimizer != None:
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+        time_aggre += (time.time() - start_time)
+        
+        all_ap.append(ap)
+        all_auc.append(auc)
+
         ###################################################
         # cur_inds changes every epoch
         
