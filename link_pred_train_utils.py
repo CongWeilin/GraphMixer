@@ -49,6 +49,9 @@ def run(model, optimizer, args, subgraphs, df, node_feats, edge_feats, mode):
     all_ap = []
     all_auc = []
     
+    if args.use_cached_subgraph == False and mode == 'train':
+        subgraphs.sampler.reset()
+        
     for ind in range(len(train_loader)):
         ###################################################
         if args.use_cached_subgraph == False and mode == 'train':
