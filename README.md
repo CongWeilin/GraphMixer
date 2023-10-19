@@ -16,7 +16,7 @@ pip install pybind11
 
 ## Run the code
 
-Step 1: Compile C++ sampler. We use the sampler from https://github.com/amazon-science/tgl.
+Step 1: Compile C++ sampler (from https://github.com/amazon-science/tgl).
 ```
 python setup.py build_ext --inplace
 ```
